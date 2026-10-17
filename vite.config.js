@@ -4,6 +4,7 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
   plugins: [react()],
+  base: '/usos-web/',
   server: {
     port: 8090,
     strictPort: true,
@@ -18,3 +19,4 @@ export default defineConfig({
     },
   },
 })
+
