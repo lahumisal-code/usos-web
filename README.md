@@ -1,16 +1,20 @@
-# React + Vite
+# USOS Management Login
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Responsive React + TypeScript login and password-reset frontend for the USOS Management system.
 
-Currently, two official plugins are available:
+## Development setup
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The frontend binds to port `8090` with strict port enforcement. A frontend and Spring Boot cannot both bind to `localhost:8090`; for local development, run Spring Boot on `8091` and let Vite proxy `/api` requests to it.
 
-## React Compiler
+Authentication API calls, request bodies, and endpoint paths are centralized in `src/api/api.js`. The current paths are `/api/auth/login` and `/api/auth/forgot-password`; controller mappings were not available in this workspace, so verify these defaults against Spring Boot and edit that file if needed. Login sends `{ "emailId": "...", "password": "..." }`.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Install and start:
 
-## Expanding the Oxlint configuration
+```sh
+npm install
+npm run dev
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+Run `npm run typecheck`, `npm run lint`, or `npm run build` for checks. Production deployments should route the configured API base path to Spring Boot in the web server/reverse proxy; Vite's development proxy is not included in the production bundle.
+
+After a successful login, the page follows a same-origin relative `redirectUrl` returned by the backend when present. Without one, it confirms success in place because this focused frontend does not include a post-login application page. It does not persist a token or password.
