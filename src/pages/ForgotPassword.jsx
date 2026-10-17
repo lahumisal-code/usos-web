@@ -4,7 +4,7 @@ import { authApi, getResetErrorMessage } from '../api/api'
 import Toast from '../components/Toast'
 
 function isValidEmail(value) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim())
+  return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value.trim())
 }
 
 export default function ForgotPassword() {

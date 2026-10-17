@@ -35,7 +35,11 @@ function EyeIcon({ hidden }) {
 }
 
 function isValidEmail(value) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim())
+  return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value.trim())
+}
+
+function isValidPassword(value) {
+  return /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value)
 }
 
 export default function Login() {
@@ -64,14 +68,21 @@ export default function Login() {
     event.preventDefault()
     setMessage(null)
     const validEmail = validateEmail()
-    const validPassword = password.length > 0
-    setPasswordError(validPassword ? '' : 'Enter your password.')
+    const validPassword = isValidPassword(password)
+    setPasswordError(validPassword ? '' : password ? 'Enter a valid password.' : 'Enter your password.')
     if (!validEmail || !validPassword) {
+      const hasEmail = Boolean(emailId.trim())
       setMessage({
         type: 'error',
-        text: !validEmail
-          ? emailId.trim() ? 'Enter a valid email address.' : 'Enter your email address.'
-          : 'Enter your password.',
+        text: !hasEmail && !validPassword
+          ? 'Please enter username and password.'
+          : !hasEmail
+            ? 'Please enter username.'
+            : !validEmail
+              ? 'Please enter a valid email address.'
+              : password
+                ? 'Please enter a valid password.'
+                : 'Please enter password.',
       })
       return
     }
@@ -122,14 +133,6 @@ export default function Login() {
                   if (emailError) setEmailError('')
                   setMessage(null)
                 }}
-                onBlur={() => {
-                  if (!validateEmail()) {
-                    setMessage({
-                      type: 'error',
-                      text: emailId.trim() ? 'Enter a valid email address.' : 'Enter your email address.',
-                    })
-                  }
-                }}
                 aria-invalid={Boolean(emailError)}
                 required
               />
@@ -151,12 +154,6 @@ export default function Login() {
                   setPassword(event.target.value)
                   if (passwordError) setPasswordError('')
                   setMessage(null)
-                }}
-                onBlur={() => {
-                  if (!password) {
-                    setPasswordError('Enter your password.')
-                    setMessage({ type: 'error', text: 'Enter your password.' })
-                  }
                 }}
                 aria-invalid={Boolean(passwordError)}
                 required
