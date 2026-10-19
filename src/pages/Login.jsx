@@ -1,8 +1,11 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { authApi, getLoginErrorMessage } from '../api/api'
 import Toast from '../components/Toast'
 import { EMAIL_REGEX, PASSWORD_REGEX } from '../constants/regex'
+import { useAuth } from '../auth/useAuth'
+import { isUniversityAdministrator } from '../auth/authValidation'
+import { dashboardPath } from '../utils/slugify'
 
 function MailIcon() {
   return (
@@ -36,13 +39,25 @@ function EyeIcon({ hidden }) {
 }
 
 export default function Login() {
+  const { login, user } = useAuth()
+  const navigate = useNavigate()
+  const location = useLocation()
   const [emailId, setEmailId] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [message, setMessage] = useState(null)
+  const [message, setMessage] = useState(() => user && !isUniversityAdministrator(user)
+    ? {
+      type: 'error',
+      text: 'This portal is currently available to university administrators only.',
+    }
+    : null)
   const [emailError, setEmailError] = useState('')
   const [passwordError, setPasswordError] = useState('')
+
+  useEffect(() => {
+    if (isUniversityAdministrator(user)) navigate(dashboardPath(user), { replace: true })
+  }, [user, navigate])
 
   function validateEmail() {
     if (!emailId.trim()) {
@@ -84,17 +99,23 @@ export default function Login() {
     setIsSubmitting(true)
     try {
       const response = await authApi.login({ username: emailId.trim(), password })
-      const redirectUrl = response.redirectUrl
-      if (typeof redirectUrl === 'string' && redirectUrl.startsWith('/') && !redirectUrl.startsWith('//')) {
-        const destination = new URL(redirectUrl, window.location.origin)
-        if (destination.origin === window.location.origin) {
-          window.location.assign(destination.href)
-          return
-        }
+      if (!isUniversityAdministrator(response)) {
+        setMessage({
+          type: 'error',
+          text: 'This portal is currently available to university administrators only.',
+        })
+        return
       }
-      setMessage({ type: 'success', text: 'You have signed in successfully.' })
+      login(response)
+      const from = location.state?.from?.pathname
+      navigate(from || dashboardPath(response), { replace: true })
     } catch (error) {
-      setMessage({ type: 'error', text: getLoginErrorMessage(error) })
+      setMessage({
+        type: 'error',
+        text: error instanceof Error && error.message.includes('login response')
+          ? error.message
+          : getLoginErrorMessage(error),
+      })
     } finally {
       setIsSubmitting(false)
     }

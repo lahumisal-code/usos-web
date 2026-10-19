@@ -1,0 +1,268 @@
+.role-administrator {
+  --role-accent: #4c82a2;
+}
+
+.university-dashboard {
+  display: grid;
+  min-width: 0;
+  max-width: 1180px;
+  gap: clamp(16px, 2.5vw, 28px);
+  margin: 0 auto;
+}
+
+.university-dashboard-heading {
+  display: flex;
+  min-width: 0;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: clamp(12px, 2vw, 24px);
+}
+
+.university-dashboard-heading > div {
+  min-width: 0;
+}
+
+.university-dashboard-eyebrow {
+  margin: 0 0 clamp(6px, 1vw, 10px);
+  color: var(--role-accent);
+  font-size: clamp(12px, 1vw, 14px);
+  font-weight: 700;
+  letter-spacing: .1em;
+  overflow-wrap: anywhere;
+}
+
+.university-dashboard-heading h1 {
+  margin: 0;
+  color: #272a32;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 650;
+  letter-spacing: -.02em;
+  overflow-wrap: anywhere;
+}
+
+.university-dashboard-heading > div > p:last-child {
+  margin: clamp(6px, 1vw, 10px) 0 0;
+  color: #85858e;
+  font-size: clamp(15px, 1.15vw, 17px);
+  line-height: 1.5;
+}
+
+.university-dashboard-role {
+  max-width: min(40%, 280px);
+  flex: 0 1 auto;
+  padding: 7px clamp(9px, 1vw, 13px);
+  border: 1px solid #cfe2ec;
+  border-radius: 100px;
+  color: #39708e;
+  background: #f0f7fa;
+  font-size: clamp(12px, .95vw, 14px);
+  font-weight: 650;
+  line-height: 1.4;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.university-dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 330px), 1fr));
+  align-items: start;
+  gap: clamp(14px, 1.8vw, 22px);
+}
+
+.university-dashboard-card {
+  min-width: 0;
+  padding: clamp(16px, 2vw, 24px);
+  border: 1px solid #f0eae5;
+  border-radius: 15px;
+  background: #fff;
+  box-shadow: 0 3px 12px rgb(44 34 26 / 2.5%);
+}
+
+.university-dashboard-card-heading {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.university-dashboard-card-heading > div {
+  min-width: 0;
+}
+
+.university-dashboard-card-heading h2 {
+  margin: 0;
+  color: #33343b;
+  font-size: clamp(17px, 1.3vw, 20px);
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+
+.university-dashboard-card-heading p {
+  margin: 6px 0 0;
+  color: #96949a;
+  font-size: clamp(13px, 1vw, 15px);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.university-permission-icon {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 11px;
+  color: #39708e;
+  background: #f6f8fa;
+}
+
+.university-name-block {
+  display: grid;
+  min-width: 0;
+  gap: clamp(7px, 1vw, 10px);
+  margin: clamp(18px, 2vw, 26px) 0 clamp(16px, 1.8vw, 22px);
+}
+
+.university-name-block strong {
+  color: #272a32;
+  font-size: clamp(20px, 1.8vw, 26px);
+  font-weight: 650;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.university-name-block span {
+  width: fit-content;
+  max-width: 100%;
+  padding: 5px 9px;
+  border-radius: 20px;
+  color: #39708e;
+  background: #f0f7fa;
+  font-size: clamp(12px, .95vw, 14px);
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+
+.university-account-details {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  border-top: 1px solid #f0eae5;
+}
+
+.university-account-details > div {
+  display: grid;
+  grid-template-columns: minmax(90px, .65fr) minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
+  padding: clamp(10px, 1.1vw, 14px) 0;
+  border-bottom: 1px solid #f0eae5;
+  font-size: clamp(13px, 1vw, 15px);
+}
+
+.university-account-details dt {
+  color: #85858e;
+  overflow-wrap: anywhere;
+}
+
+.university-account-details dd {
+  min-width: 0;
+  margin: 0;
+  color: #4c4b52;
+  font-weight: 600;
+  text-align: right;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.university-permission-count {
+  display: grid;
+  min-width: 32px;
+  height: 32px;
+  flex: 0 0 auto;
+  place-items: center;
+  padding: 0 8px;
+  border-radius: 50%;
+  color: #39708e;
+  background: #f0f7fa;
+  font-size: clamp(13px, 1vw, 15px);
+  font-weight: 700;
+}
+
+.university-permission-list {
+  display: grid;
+  gap: 0;
+  margin: clamp(14px, 1.5vw, 20px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.university-permission-list li {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: 36px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(8px, 1vw, 13px);
+  padding: clamp(10px, 1.1vw, 14px) 0;
+  border-top: 1px solid #f0eae5;
+}
+
+.university-permission-icon {
+  width: 36px;
+  height: 36px;
+}
+
+.university-permission-copy {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+}
+
+.university-permission-copy strong {
+  color: #4c4b52;
+  font-size: clamp(14px, 1vw, 16px);
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+
+.university-permission-copy small {
+  color: #96949a;
+  font-size: clamp(12px, .9vw, 14px);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.university-permission-status {
+  padding: 5px 8px;
+  border-radius: 20px;
+  color: #36795b;
+  background: #edf8f1;
+  font-size: clamp(11px, .85vw, 13px);
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.university-permissions-empty {
+  margin: 24px 0 4px;
+  color: #85858e;
+  font-size: clamp(14px, 1vw, 16px);
+  line-height: 1.5;
+}
+
+@media (max-width: 520px) {
+  .university-dashboard-heading {
+    flex-direction: column;
+  }
+
+  .university-dashboard-role {
+    max-width: 100%;
+  }
+
+  .university-permission-list li {
+    grid-template-columns: 32px minmax(0, 1fr);
+  }
+
+  .university-permission-status {
+    grid-column: 2;
+    justify-self: start;
+  }
+}
