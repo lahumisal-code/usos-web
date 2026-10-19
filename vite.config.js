@@ -1,22 +1,23 @@
 
 import react from '@vitejs/plugin-react'
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 
-export default defineConfig({
-  plugins: [react()],
-  base: '/',
-  server: {
-    port: 8090,
-    strictPort: true,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:8091',
-        changeOrigin: true,
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), '')
+
+  return {
+    plugins: [react()],
+    base: '/',
+    server: {
+      proxy: {
+        '/v1/api': {
+          target: env.BACKEND_PORT_URL,
+          changeOrigin: true,
+        },
+      },
+      watch: {
+        usePolling: true,
       },
     },
-    watch: {
-      usePolling: true,
-    },
-  },
+  }
 })
-
