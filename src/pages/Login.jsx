@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { authApi, getLoginErrorMessage } from '../api/api'
 import Toast from '../components/Toast'
+import { EMAIL_REGEX, PASSWORD_REGEX } from '../constants/regex'
 
 function MailIcon() {
   return (
@@ -34,14 +35,6 @@ function EyeIcon({ hidden }) {
   )
 }
 
-function isValidEmail(value) {
-  return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value.trim())
-}
-
-function isValidPassword(value) {
-  return /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value)
-}
-
 export default function Login() {
   const [emailId, setEmailId] = useState('')
   const [password, setPassword] = useState('')
@@ -56,7 +49,7 @@ export default function Login() {
       setEmailError('Enter your email address.')
       return false
     }
-    if (!isValidEmail(emailId)) {
+    if (!EMAIL_REGEX.test(emailId.trim())) {
       setEmailError('Enter a valid email address.')
       return false
     }
@@ -68,7 +61,7 @@ export default function Login() {
     event.preventDefault()
     setMessage(null)
     const validEmail = validateEmail()
-    const validPassword = isValidPassword(password)
+    const validPassword = PASSWORD_REGEX.test(password)
     setPasswordError(validPassword ? '' : password ? 'Enter a valid password.' : 'Enter your password.')
     if (!validEmail || !validPassword) {
       const hasEmail = Boolean(emailId.trim())
@@ -90,7 +83,7 @@ export default function Login() {
 
     setIsSubmitting(true)
     try {
-      const response = await authApi.login({ emailId: emailId.trim(), password })
+      const response = await authApi.login({ username: emailId.trim(), password })
       const redirectUrl = response.redirectUrl
       if (typeof redirectUrl === 'string' && redirectUrl.startsWith('/') && !redirectUrl.startsWith('//')) {
         const destination = new URL(redirectUrl, window.location.origin)

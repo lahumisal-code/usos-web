@@ -2,10 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { authApi, getResetErrorMessage } from '../api/api'
 import Toast from '../components/Toast'
-
-function isValidEmail(value) {
-  return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value.trim())
-}
+import { EMAIL_REGEX } from '../constants/regex'
 
 export default function ForgotPassword() {
   const [emailId, setEmailId] = useState('')
@@ -21,7 +18,7 @@ export default function ForgotPassword() {
       setMessage({ type: 'error', text: 'Enter your email address.' })
       return
     }
-    if (!isValidEmail(emailId)) {
+    if (!EMAIL_REGEX.test(emailId.trim())) {
       setEmailError('Enter a valid email address.')
       setMessage({ type: 'error', text: 'Enter a valid email address.' })
       return

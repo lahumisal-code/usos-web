@@ -6,7 +6,7 @@ Responsive React + TypeScript login and password-reset frontend for the USOS Man
 
 The frontend binds to port `8090` with strict port enforcement. A frontend and Spring Boot cannot both bind to `localhost:8090`; for local development, run Spring Boot on `8091` and let Vite proxy `/api` requests to it.
 
-Authentication API calls, request bodies, and endpoint paths are centralized in `src/api/api.js`. The current paths are `/api/auth/login` and `/api/auth/forgot-password`; controller mappings were not available in this workspace, so verify these defaults against Spring Boot and edit that file if needed. Login sends `{ "emailId": "...", "password": "..." }`.
+Authentication API calls, request bodies, and endpoint paths are centralized in `src/api/api.js`. Login sends `{ "username": "...", "password": "..." }`, matching the backend login request DTO; password reset sends `{ "emailId": "..." }`.
 
 Install and start:
 

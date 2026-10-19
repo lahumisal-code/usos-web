@@ -35,7 +35,10 @@ function getApiError(error) {
 
   return {
     status: error.response?.status ?? null,
-    message: error.response?.data?.message ?? error.response?.data?.error ?? null,
+    message: error.response?.data?.message
+      ?? error.response?.data?.errorMessage
+      ?? error.response?.data?.error
+      ?? null,
     hasResponse: Boolean(error.response),
   }
 }
